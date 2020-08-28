@@ -32,9 +32,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
-                android:text="Home"
+                android:text="@string/home_title"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
                 app:titleTextAppearance="@style/AppbarTitleStyle" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -103,23 +103,23 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/pizzaChip"
                 style="@style/CustomChipChoice"
-                android:text="Pizzas"
+                android:text="@string/pizzas_title"
                 android:textAppearance="@style/ChipTextStyle" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/burgerChip"
                 style="@style/CustomChipChoice"
-                android:text="Burgers" />
+                android:text="@string/burgers_title" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/rollsChip"
                 style="@style/CustomChipChoice"
-                android:text="Rolls" />
+                android:text="@string/rolls_title" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/drinksChip"
                 style="@style/CustomChipChoice"
-                android:text="Drinks" />
+                android:text="@string/drinks_title" />
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>

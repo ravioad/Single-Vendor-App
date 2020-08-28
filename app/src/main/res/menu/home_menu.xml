@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/userProfile" android:title="User Profile"/>
-    <item android:id="@+id/settings" android:title="Settings"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="Favorite"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        app:showAsAction="always"
+        android:title="Cart" />
+    <item
+        android:id="@+id/userProfile"
+        android:title="Profile" />
+    <item
+        android:id="@+id/settings"
+        android:title="Settings" />
 </menu>

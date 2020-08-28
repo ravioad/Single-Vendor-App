@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="login_component_width">@dimen/_260sdp</dimen>
+    <dimen name="spacing">@dimen/_8sdp</dimen>
 </resources>

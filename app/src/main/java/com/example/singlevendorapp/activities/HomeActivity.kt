@@ -94,7 +94,7 @@ class HomeActivity : MyBaseClass() {
                     val adapter = HomeTopPagerAdapter(this, list)
                     home_top_viewpager.adapter = adapter
                     home_tab_indicator.setupWithViewPager(home_top_viewpager)
-                    autoScrollViewPager(list)
+//                    autoScrollViewPager(list)
                 }
                 is Status.Loading -> {
                     //it should show errorDialog if internet is not connected

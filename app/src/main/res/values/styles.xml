@@ -34,10 +34,12 @@
     <style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
+
     <style name="AppbarTitleStyle" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 
     <style name="Button.White" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@android:color/white</item>
