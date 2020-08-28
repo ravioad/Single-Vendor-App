@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData
 import com.example.singlevendorapp.Status
 import com.google.firebase.database.*
 
-class FirebaseQueryLiveData : LiveData<Status<DataSnapshot>>() {
+class FirebaseQueryLiveData(refer: DatabaseReference) : LiveData<Status<DataSnapshot>>() {
 
     init {
         value = Status.Loading()
     }
 
-    private var reference: DatabaseReference =
-        FirebaseDatabase.getInstance().reference.child("products")
+    val reference: DatabaseReference = refer
+//    private var reference: DatabaseReference =
+//        FirebaseDatabase.getInstance().reference.child("products")
+
 
     private val lis = object : ValueEventListener {
         override fun onCancelled(error: DatabaseError) {

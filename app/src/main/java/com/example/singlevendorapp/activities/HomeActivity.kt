@@ -22,12 +22,13 @@ import com.example.singlevendorapp.models.ProductModel
 import com.example.singlevendorapp.mycustomviews.Type1ListenerCallback
 import com.example.singlevendorapp.toast
 import com.google.android.material.chip.Chip
+import com.google.firebase.database.FirebaseDatabase
 import kotlin.collections.ArrayList
 
 class HomeActivity : MyBaseClass() {
 
     private val productViewModel: ProductViewModel by viewModels {
-        ProductDependencyInjectorUtility.getProductViewModelFactory()
+        ProductDependencyInjectorUtility.getProductViewModelFactory(FirebaseDatabase.getInstance().reference.child("products").child("deals"))
     }
 
     private var currentPosition = 0

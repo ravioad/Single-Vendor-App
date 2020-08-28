@@ -1,12 +1,12 @@
 package com.example.singlevendorapp.FactoryClasses
 
 import com.example.singlevendorapp.repositories.FirebaseQueryLiveData
+import com.google.firebase.database.DatabaseReference
 
 object ProductDependencyInjectorUtility {
 
-    fun getProductViewModelFactory(): ProductViewModelFactoryClass {
-        val vv = FirebaseQueryLiveData()
+    fun getProductViewModelFactory(reference: DatabaseReference): ProductViewModelFactoryClass {
 //        Log.e("Value check", (vv.value==null).toString())
-        return ProductViewModelFactoryClass(vv)
+        return ProductViewModelFactoryClass( FirebaseQueryLiveData(reference))
     }
 }
