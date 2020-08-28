@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_screen_color"
+    tools:context=".activities.HomeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/home_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAlignment="center">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            app:menu="@menu/home_menu">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:text="Home"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:titleTextAppearance="@style/AppbarTitleStyle" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/home_top_viewpager_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_appbarLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="@dimen/_4sdp"
+        android:paddingTop="@dimen/_8sdp">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/home_tab_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_top_viewpager"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-10dp"
+            android:background="@color/home_screen_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_top_viewpager"
+            app:tabBackground="@drawable/indicator_selector"
+            app:tabIndicatorHeight="0dp">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/home_top_viewpager"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toTopOf="@+id/home_tab_indicator"
+            app:layout_goneMarginEnd="@dimen/_8sdp">
+
+        </androidx.viewpager.widget.ViewPager>
+    </RelativeLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/home_chips_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/home_top_viewpager_layout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-10dp"
+        android:paddingHorizontal="@dimen/_5sdp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/home_chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedChip="@+id/pizzaChip"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pizzaChip"
+                style="@style/CustomChipChoice"
+                android:text="Pizzas"
+                android:textAppearance="@style/ChipTextStyle" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/burgerChip"
+                style="@style/CustomChipChoice"
+                android:text="Burgers" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/rollsChip"
+                style="@style/CustomChipChoice"
+                android:text="Rolls" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/drinksChip"
+                style="@style/CustomChipChoice"
+                android:text="Drinks" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:id="@+id/home_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/home_chips_scrollview"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

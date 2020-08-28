@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/intro_viewpager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <Button
+        android:id="@+id/intro_next_button"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="@dimen/_10ssp"
+        android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+        android:drawableTint="@color/gradient_start"
+        android:text="Next"
+        android:background="@android:color/white"
+        android:textColor="@color/gradient_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/intro_next_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIndicatorHeight="0dp"
+        app:tabBackground="@drawable/indicator_selector">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <Button
+        android:id="@+id/intro_getstarted_button"
+        android:layout_width="@dimen/_110sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@drawable/intro_getstarted_button_style"
+        android:text="Get Started"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
