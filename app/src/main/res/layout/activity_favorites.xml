@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_screen_color"
+    tools:context=".activities.FavoritesActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/favorite_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAlignment="center">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/favorite_topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:textAlignment="center">
+
+            <TextView
+                style="@style/AppbarTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="Favorites" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/no_favorites_added"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="No Favorites Added"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="@dimen/_14ssp"
+        android:layout_centerInParent="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorite_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/favorite_appbarLayout"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        tools:listitem="@layout/favorites_list_item" />
+</RelativeLayout>

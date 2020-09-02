@@ -1,11 +1,16 @@
 package com.example.singlevendorapp.models
 
-class ProductModel(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.io.Serializable
+
+@Entity
+data class ProductModel(
     val name: String = "",
     val price: Int = 0,
     val image: String = "",
-    val quantity: Int = 0
-) {
+    @PrimaryKey(autoGenerate = true) val quantity: Int = 0
+): Serializable {
 //
 //    fun getName() = name
 //    fun getPrice() = price

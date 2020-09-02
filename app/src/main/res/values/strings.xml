@@ -9,4 +9,7 @@
     <string name="burgers_title">Burgers</string>
     <string name="rolls_title">Rolls</string>
     <string name="drinks_title">Drinks</string>
+    <string name="fav_image">Favorite Image</string>
+    <string name="placeholder_fav_title">Pepperoni Pizza</string>
+    <string name="remove_fav">Remove</string>
 </resources>

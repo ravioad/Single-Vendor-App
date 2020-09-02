@@ -22,26 +22,25 @@
 
         <ImageView
             android:id="@+id/addFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/_8sdp"
+            android:contentDescription="addedFalse"
             android:src="@drawable/favorited_border" />
 
         <TextView
             android:id="@+id/title"
+            style="@style/product_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_22ssp"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:autoSizeTextType="uniform"
-            android:text="Papperoni Pizza"
-            android:textAlignment="center"
-            android:textColor="#686666"
-            android:textSize="@dimen/_17ssp"
-            android:textStyle="bold" />
+            android:text="Papperoni Pizza" />
 
         <TextView
             android:id="@+id/price"
@@ -51,6 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-25dp"
             android:layout_marginBottom="@dimen/_5sdp"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:text="Rs. 340"
             android:textColor="#639F27"
             android:textSize="@dimen/_12ssp"
@@ -64,9 +64,7 @@
             android:layout_below="@id/price"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize=".5" />
+            android:isIndicator="true" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

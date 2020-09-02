@@ -1,19 +1,19 @@
 package com.example.singlevendorapp.activities
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.example.singlevendorapp.R
-import com.example.singlevendorapp.adapters.HomeTopPagerAdapter
-import com.example.singlevendorapp.viewmodels.ProductViewModel
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.singlevendorapp.FactoryClasses.ProductDependencyInjectorUtility
 import com.example.singlevendorapp.MyBaseClass
+import com.example.singlevendorapp.R
 import com.example.singlevendorapp.Status
+import com.example.singlevendorapp.adapters.HomeTopPagerAdapter
 import com.example.singlevendorapp.fragments.BurgerFragment
 import com.example.singlevendorapp.fragments.DrinksFragment
 import com.example.singlevendorapp.fragments.PizzaFragment
@@ -21,14 +21,22 @@ import com.example.singlevendorapp.fragments.RollsFragment
 import com.example.singlevendorapp.models.ProductModel
 import com.example.singlevendorapp.mycustomviews.Type1ListenerCallback
 import com.example.singlevendorapp.toast
+import com.example.singlevendorapp.viewmodels.ProductViewModel
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeActivity : MyBaseClass() {
 
     private val productViewModel: ProductViewModel by viewModels {
-        ProductDependencyInjectorUtility.getProductViewModelFactory(FirebaseDatabase.getInstance().reference.child("products").child("deals"))
+        ProductDependencyInjectorUtility.getProductViewModelFactory(
+            FirebaseDatabase.getInstance().reference.child(
+                "products"
+            ).child("deals")
+        )
     }
 
     private var currentPosition = 0
@@ -36,6 +44,8 @@ class HomeActivity : MyBaseClass() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        val toolbar: MaterialToolbar? = findViewById(R.id.home_topAppBar)
+        setSupportActionBar(toolbar)
         addCommonViews(home_rootLayout, this)
         populateData()
         handleFragmentsChips()
@@ -116,6 +126,20 @@ class HomeActivity : MyBaseClass() {
             }
         })
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorites -> {
+                startActivity(Intent(this, FavoritesActivity::class.java))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun animateChip(index: Int) {

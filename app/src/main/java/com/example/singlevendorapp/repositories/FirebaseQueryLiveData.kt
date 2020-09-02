@@ -10,7 +10,7 @@ class FirebaseQueryLiveData(refer: DatabaseReference) : LiveData<Status<DataSnap
         value = Status.Loading()
     }
 
-    val reference: DatabaseReference = refer
+    private val reference: DatabaseReference = refer
 //    private var reference: DatabaseReference =
 //        FirebaseDatabase.getInstance().reference.child("products")
 
@@ -23,6 +23,7 @@ class FirebaseQueryLiveData(refer: DatabaseReference) : LiveData<Status<DataSnap
         override fun onDataChange(snapshot: DataSnapshot) {
             value = Status.Success(snapshot)
         }
+
     }
 
     override fun onActive() {
