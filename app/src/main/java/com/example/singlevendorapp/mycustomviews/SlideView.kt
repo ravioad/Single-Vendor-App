@@ -35,6 +35,7 @@ class SlideView(
     init {
         View.inflate(context, R.layout.product_slideview_layout, this)
         innerMainRlSlideView.addView(childView)
+        blurView?.visibility = View.INVISIBLE
         sizeLoaded.value = false
         elevation = 80f
         setContentPadding(0, 0, 0, 0)
@@ -64,65 +65,105 @@ class SlideView(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         parentHeight = (parent as View).height
-        moveDownOffset = parentHeight.toFloat() - 85f
         moveUpOffset = parentHeight.toFloat() - this.height.toFloat()
         mainRootView = this
-        this.y = moveDownOffset
+        handleRl.viewTreeObserver.addOnGlobalLayoutListener {
+            moveDownOffset = parentHeight.toFloat() - handleRl.height.toFloat()
+            mainRootView.y = parentHeight.toFloat() - handleRl.height.toFloat()
+        }
+        //  this.y = moveDownOffset
         yUpperLimit = moveUpOffset
-        yLowerLimit = 0f//parentHeight.toFloat() - (parentHeight * 30 / 100).toFloat()
+        yLowerLimit = parentHeight.toFloat() - (parentHeight * 20 / 100).toFloat()
 //        mainRootView.y = parentHeight.toFloat()
         if (sizeLoaded.value == false) {
             sizeLoaded.value = true
+            handle.setOnClickListener {
+                //context.toast(isOpened.toString())
+                if (isOpened) {
+                    SlideDown()
+                } else {
+                    slideUp(moveDownOffset)
+                }
+            }
+            setTouchDrag()
         }
     }
 
-    fun slideUp() {
+    private fun rotateHandle(isOpen: Boolean) {
+        val animator =
+            if (isOpen) {
+                ObjectAnimator.ofFloat(handle, "rotation", 180f)
+            } else {
+                ObjectAnimator.ofFloat(handle, "rotation", 0f)
+            }
+        animator.duration = 400
+        animator.start()
+    }
+
+    fun slideUp(currentPosition: Float) {
         if (sizeLoaded.value == true) {
-            slideUpOnSizeLoaded()
+            slideUpOnSizeLoaded(currentPosition)
         } else {
             sizeLoaded.observe((context as AppCompatActivity), Observer {
                 if (it == true) {
-                    slideUpOnSizeLoaded()
+                    slideUpOnSizeLoaded(currentPosition)
                 }
             })
         }
     }
 
-    private fun slideUpOnSizeLoaded() {
+    private fun slideUpOnSizeLoaded(currentPosition: Float) {
         isOpened = true
-        this.y = moveDownOffset
+        rotateHandle(true)
+        this.y = currentPosition
         this.visibility = View.VISIBLE
-        blurView?.visibility = View.VISIBLE
         animation = ObjectAnimator.ofFloat(mainRootView, "Y", moveUpOffset)
         animation?.duration = 400
         animation?.start()
+        animation?.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
 
-        //setTouchDrag()
-        doneButton.setOnClickListener {
-            SlideDown()
-        }
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                blurView?.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+
+            }
+
+        })
+
+
     }
 
     fun SlideDown() {
+        rotateHandle(false)
         animation = ObjectAnimator.ofFloat(mainRootView, "Y", moveDownOffset)
         animation?.duration = 400
         animation?.start()
         animation?.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onAnimationEnd(animation: Animator?) {
                 blurView?.visibility = View.INVISIBLE
                 currentlyVisible = false
+                isOpened = false
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onAnimationStart(animation: Animator?) {
-                TODO("Not yet implemented")
+
             }
 
         })
@@ -147,16 +188,25 @@ class SlideView(
                             } else {
                                 yUpperLimit
                             }
-                            this@SlideView.animate()
-                                .y(displacment)
-                                .setDuration(0)
-                                .start();
+                            if (displacment < moveDownOffset) {
+                                this@SlideView.animate()
+                                    .y(displacment)
+                                    .setDuration(0)
+                                    .start()
+                            }
                         }
                     }
                     MotionEvent.ACTION_UP -> {
                         if (this@SlideView.y > yLowerLimit) {
                             // this@SlideView.y = event.rawY + dY
-                            // SlideDown()
+                            SlideDown()
+                        } else {
+                            val currentPos = if ((event.rawY + dY) < yUpperLimit) {
+                                yUpperLimit
+                            } else {
+                                (event.rawY + dY)
+                            }
+                            slideUp(currentPos)
                         }
                     }
 

@@ -3,22 +3,95 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_250sdp"
-        android:layout_above="@+id/product_add_cart_button"
-        android:layout_centerInParent="true"
+    <TextView
+        android:id="@+id/product_total_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/balsamiq_sans_regular"
+        android:text="3 Items in Your Cart" />
+
+    <TextView
+        android:id="@+id/product_slideview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_total_cart"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="155dp"
-        android:src="@drawable/error" />
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/balsamiq_sans_bold"
+        android:text="Pepperoni Pizza"
+        android:textSize="@dimen/_23ssp" />
+
+    <LinearLayout
+        android:id="@+id/slideView_content_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_slideview_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/product_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/balsamiq_sans_bold"
+            android:text="Rs. 230"
+            android:textColor="#FFDA00"
+            android:textSize="@dimen/_20ssp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/intro_getstarted_button_style"
+                android:src="@drawable/remove_product_icon"
+                android:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:fontFamily="@font/balsamiq_sans_bold"
+                android:text="2"
+                android:textSize="@dimen/_20ssp" />
+
+            <ImageButton
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/intro_getstarted_button_style"
+                android:src="@drawable/add_product_icon"
+                android:tint="@android:color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/product_add_cart_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_below="@+id/slideView_content_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/intro_getstarted_button_style"
         android:text="Add TO cart"
-        android:textColor="@android:color/white"
-        android:layout_centerHorizontal="true"/>
+        android:textColor="@android:color/white" />
 </RelativeLayout>

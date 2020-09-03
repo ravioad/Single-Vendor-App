@@ -1,6 +1,5 @@
 package com.example.singlevendorapp.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,25 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.singlevendorapp.FactoryClasses.ProductDependencyInjectorUtility
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.Status
-import com.example.singlevendorapp.adapters.HomeTopPagerAdapter
 import com.example.singlevendorapp.adapters.PizzaFragmentAdapter
-import com.example.singlevendorapp.helper.RecyclerItemSpacing
 import com.example.singlevendorapp.models.ProductModel
-import com.example.singlevendorapp.mycustomviews.Type1ListenerCallback
-import com.example.singlevendorapp.toast
 import com.example.singlevendorapp.viewmodels.ProductViewModel
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_home.*
 
 class PizzaFragment : Fragment() {
     companion object {

@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/product_rootLayout"
     android:background="@drawable/product_activity_background"
     tools:context=".activities.ProductActivity">
 
@@ -17,6 +17,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/product_topAppBar"
+            style="@style/TransparentMaterialAppbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
@@ -26,20 +27,20 @@
                 android:layout_height="@dimen/_23sdp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:src="@drawable/product_favorite_icon" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:id="@+id/productTitle"
-        android:layout_width="@dimen/_170sdp"
+        android:layout_width="@dimen/_175sdp"
         android:layout_height="wrap_content"
         android:layout_below="@id/product_appbarLayout"
         android:layout_alignParentStart="true"
         android:layout_marginStart="37dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="@dimen/_35sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_toStartOf="@+id/productPrice"
         android:fontFamily="@font/balsamiq_sans_bold"
         android:text="Pepperoni Pizza"
@@ -64,8 +65,8 @@
         android:id="@+id/product_image_cardview"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_230sdp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/productTitle"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_40sdp"
         android:elevation="@dimen/_16sdp"
         app:cardCornerRadius="@dimen/_12sdp">
@@ -91,4 +92,10 @@
     </androidx.cardview.widget.CardView>
 
 
+
+<!--    <androidx.RelativeLayout.widget.Guideline-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintGuide_percent="0.57" />-->
 </RelativeLayout>

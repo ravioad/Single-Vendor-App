@@ -1,5 +1,6 @@
 package com.example.singlevendorapp.activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,6 @@ import com.example.singlevendorapp.mycustomviews.BlurView
 import com.example.singlevendorapp.mycustomviews.SlideView
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.activity_product.*
-import kotlinx.android.synthetic.main.product_slideview_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -37,30 +37,22 @@ class ProductActivity : AppCompatActivity() {
                 if (checkIfAvailable(product.image)) {
                     Glide.with(this@ProductActivity).load(R.drawable.favorited).fitCenter()
                         .into(product_favorite)
+
                 } else {
                     Glide.with(this@ProductActivity).load(R.drawable.favorited_border).fitCenter()
                         .into(product_favorite)
+                    product_favorite.setColorFilter(Color.parseColor("#FFFFFF"))
                 }
             }
         }
         val blurView = BlurView(this)
         product_rootLayout.post {
-            val myRecycler: View = View.inflate(this, R.layout.product_slideview_child, null)
-            slideView = SlideView(this, 40, myRecycler, blurView)
+            product_rootLayout.addView(blurView)
+            val slideLayout: View = View.inflate(this, R.layout.product_slideview_child, null)
+            slideView = SlideView(this, 40, slideLayout, blurView)
             product_rootLayout.addView(slideView)
-            
-//            handleRl.setOnClickListener {
-//                if (isOpened) {
-//                    SlideDown()
-//                } else {
-//                    slideUp()
-//                }
-//            }
         }
 
-        productTitle.setOnClickListener {
-            slideView?.slideUp()
-        }
 
     }
 
