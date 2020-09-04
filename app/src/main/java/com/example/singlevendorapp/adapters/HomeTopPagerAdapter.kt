@@ -10,7 +10,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.models.IntroPageItem
-import com.example.singlevendorapp.models.Product
 import com.example.singlevendorapp.models.ProductModel
 
 class HomeTopPagerAdapter(val context: Context, val mList: ArrayList<ProductModel>) :

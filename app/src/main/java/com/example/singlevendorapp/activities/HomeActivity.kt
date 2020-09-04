@@ -54,8 +54,8 @@ class HomeActivity : MyBaseClass() {
 
     private fun handleFragmentsChips() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.home_fragment_container, PizzaFragment.newInstance()).commitNow()
-        pizzaChip.elevation = 20f
+            .add(R.id.home_fragment_container, BurgerFragment.newInstance()).commitNow()
+        burgerChip.elevation = 20f
 
         home_chipGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {

@@ -2,41 +2,49 @@ package com.example.singlevendorapp.mycustomviews
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.singlevendorapp.R
+import com.example.singlevendorapp.models.ProductModel
 import kotlinx.android.synthetic.main.product_slideview_layout.view.*
 
 class SlideView(
-    context: Context,
-    val percentageHeight: Int? = null,
-    childView: View,
+    context: Context, product: ProductModel? = null,
+    private val percentageHeight: Int? = null,
     val blurView: BlurView? = null
 ) : CardView(context) {
     private var sizeLoaded: MutableLiveData<Boolean> = MutableLiveData()
+    private var downOffsetLoaded: MutableLiveData<Boolean> = MutableLiveData()
     private var parentHeight: Int = 0
     private var animation: ObjectAnimator? = null
     private var moveDownOffset = 0f
     private var moveUpOffset = 0f
     private lateinit var mainRootView: View
     private var currentlyVisible = false
-
     var dY: Float = 0f
     var yUpperLimit = 0f
     var yLowerLimit = 0f
 
     private var isOpened = false
+    private var productCount = 1
+    private var quantityText: TextView? = null
+
+    private val realPrice = product?.price
+    private val title = product?.name
 
     init {
         View.inflate(context, R.layout.product_slideview_layout, this)
-        innerMainRlSlideView.addView(childView)
         blurView?.visibility = View.INVISIBLE
         sizeLoaded.value = false
+        downOffsetLoaded.value = false
         elevation = 80f
         setContentPadding(0, 0, 0, 0)
         clipToPadding = true
@@ -46,6 +54,7 @@ class SlideView(
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        Log.e("debug: OnMeasure", "called....")
         parentHeight = (parent as View).height
         if (percentageHeight != null) {
             setMeasuredDimension(
@@ -63,24 +72,26 @@ class SlideView(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        Log.e("debug: onSizeChanged", "Called....")
         super.onSizeChanged(w, h, oldw, oldh)
         parentHeight = (parent as View).height
         moveUpOffset = parentHeight.toFloat() - this.height.toFloat()
         mainRootView = this
         handleRl.viewTreeObserver.addOnGlobalLayoutListener {
             moveDownOffset = parentHeight.toFloat() - handleRl.height.toFloat()
-            mainRootView.y = parentHeight.toFloat() - handleRl.height.toFloat()
+            if (downOffsetLoaded.value == false) {
+                downOffsetLoaded.value = true
+            }
         }
-        //  this.y = moveDownOffset
+        initializeViewPosition()
         yUpperLimit = moveUpOffset
         yLowerLimit = parentHeight.toFloat() - (parentHeight * 20 / 100).toFloat()
-//        mainRootView.y = parentHeight.toFloat()
+        quantityText = (context as Activity).findViewById(R.id.product_quantity)
         if (sizeLoaded.value == false) {
             sizeLoaded.value = true
             handle.setOnClickListener {
-                //context.toast(isOpened.toString())
                 if (isOpened) {
-                    SlideDown()
+                    slideDown()
                 } else {
                     slideUp(moveDownOffset)
                 }
@@ -100,6 +111,18 @@ class SlideView(
         animator.start()
     }
 
+    private fun initializeViewPosition() {
+        if (downOffsetLoaded.value == true) {
+            mainRootView.y = moveDownOffset
+        } else {
+            downOffsetLoaded.observe((context as AppCompatActivity), Observer {
+                if (it == true) {
+                    mainRootView.y = moveDownOffset
+                }
+            })
+        }
+    }
+
     fun slideUp(currentPosition: Float) {
         if (sizeLoaded.value == true) {
             slideUpOnSizeLoaded(currentPosition)
@@ -113,6 +136,7 @@ class SlideView(
     }
 
     private fun slideUpOnSizeLoaded(currentPosition: Float) {
+        handleSlideViewClickListeners()
         isOpened = true
         rotateHandle(true)
         this.y = currentPosition
@@ -138,11 +162,35 @@ class SlideView(
             }
 
         })
+    }
 
+    private fun handleSlideViewClickListeners() {
+        product_slideview_title.text = title
+        var calculatedPrice = "Rs. ${(productCount * realPrice!!)}"
+        product_total_price.text = calculatedPrice
+        product_quantity.text = productCount.toString()
+
+        product_addProduct.setOnClickListener {
+            productCount += 1
+            quantityText?.text = productCount.toString()
+            calculatedPrice = "Rs. ${(productCount * realPrice)}"
+            product_total_price.text = calculatedPrice
+        }
+        product_removeProduct.setOnClickListener {
+            if (productCount > 1) {
+                productCount -= 1
+                quantityText?.text = productCount.toString()
+                calculatedPrice = "Rs. ${(productCount * realPrice)}"
+                product_total_price.text = calculatedPrice
+            }
+        }
+        product_add_cart_button.setOnClickListener {
+
+        }
 
     }
 
-    fun SlideDown() {
+    fun slideDown() {
         rotateHandle(false)
         animation = ObjectAnimator.ofFloat(mainRootView, "Y", moveDownOffset)
         animation?.duration = 400
@@ -169,7 +217,7 @@ class SlideView(
         })
     }
 
-    fun setTouchDrag() {
+    private fun setTouchDrag() {
         handleRl.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 when (event?.action) {
@@ -199,7 +247,7 @@ class SlideView(
                     MotionEvent.ACTION_UP -> {
                         if (this@SlideView.y > yLowerLimit) {
                             // this@SlideView.y = event.rawY + dY
-                            SlideDown()
+                            slideDown()
                         } else {
                             val currentPos = if ((event.rawY + dY) < yUpperLimit) {
                                 yUpperLimit

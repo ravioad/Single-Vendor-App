@@ -21,7 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimaryDark"
             app:menu="@menu/home_menu"
-            app:title="Home"></com.google.android.material.appbar.MaterialToolbar>
+            app:title="Home"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -79,7 +79,7 @@
             android:id="@+id/home_chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:checkedChip="@+id/pizzaChip"
+            app:checkedChip="@+id/burgerChip"
             app:selectionRequired="true"
             app:singleSelection="true">
 
