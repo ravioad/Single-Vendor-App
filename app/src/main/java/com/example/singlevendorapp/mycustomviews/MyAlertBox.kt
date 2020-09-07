@@ -1,26 +1,19 @@
 package com.example.singlevendorapp.mycustomviews
 
-import com.example.singlevendorapp.R
 import android.animation.Animator
 import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
-import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.example.singlevendorapp.R
 import kotlinx.android.synthetic.main.my_alert_box_layout.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 interface Type2ListenerCallback {
     fun button1ClickListener()
@@ -31,14 +24,21 @@ interface Type1ListenerCallback {
     fun buttonClickListener()
 }
 
-class MyAlertBox(context: Context, val blurView: BlurView, val isSingleButton: Boolean) :
+class MyAlertBox(
+    context: Context,
+    val blurView: BlurView,
+    private val isSingleButton: Boolean,
+    private val firstButtonText: String,
+    private val secondButtonText: String
+) :
     RelativeLayout(context) {
-    var bottomPos = 0f
-    var centerPos = 0f
+    private var bottomPos = 0f
+    private var centerPos = 0f
     var animator: ObjectAnimator? = null
     var sizeLoaded = MutableLiveData<Boolean>()
     var listener: Type2ListenerCallback? = null
     var listener2: Type1ListenerCallback? = null
+    private var parentWidth: Int? = null
 
     init {
         sizeLoaded.value = false
@@ -55,6 +55,7 @@ class MyAlertBox(context: Context, val blurView: BlurView, val isSingleButton: B
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         val parentHeight = (this.parent as View).height
+        parentWidth = (this.parent as View).width
         bottomPos = 0f - (this.height)
         centerPos = (parentHeight / 2).toFloat() - (this.height / 2)
 //        this.y = centerPos
@@ -104,7 +105,7 @@ class MyAlertBox(context: Context, val blurView: BlurView, val isSingleButton: B
         if (isSingleButton) {
             dialogType1()
         } else {
-            dialogType2()
+            dialogType2(text1 = firstButtonText, text2 = secondButtonText)
         }
         blurView.visibility = View.VISIBLE
         this.y = bottomPos
@@ -164,7 +165,7 @@ class MyAlertBox(context: Context, val blurView: BlurView, val isSingleButton: B
         button.text = text
         button.setTextColor(Color.parseColor("#FFFFFF"))
         params.topMargin = 90
-        params.width = 500
+        params.width = (35* parentWidth!!/100)
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         params.addRule(align)
         return params

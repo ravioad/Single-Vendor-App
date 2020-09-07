@@ -6,7 +6,14 @@ import com.google.firebase.database.DatabaseReference
 object ProductDependencyInjectorUtility {
 
     fun getProductViewModelFactory(reference: DatabaseReference): ProductViewModelFactoryClass {
-//        Log.e("Value check", (vv.value==null).toString())
-        return ProductViewModelFactoryClass( FirebaseQueryLiveData(reference))
+        return ProductViewModelFactoryClass(FirebaseQueryLiveData(reference))
+    }
+
+    fun getFavoritesViewModelFactory(): FavoritesViewModelFactoryClass {
+        return FavoritesViewModelFactoryClass()
+    }
+
+    fun getCartViewModelFactory(): CartViewModelFactoryClass{
+        return  CartViewModelFactoryClass()
     }
 }

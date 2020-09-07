@@ -1,4 +1,4 @@
-package com.example.singlevendorapp
+package com.example.singlevendorapp.databaseUtils
 
 import androidx.room.Dao
 import androidx.room.Delete

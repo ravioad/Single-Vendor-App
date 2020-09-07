@@ -2,7 +2,6 @@ package com.example.singlevendorapp.mycustomviews
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.MotionEvent
@@ -13,11 +12,10 @@ import androidx.cardview.widget.CardView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.singlevendorapp.R
-import com.example.singlevendorapp.models.ProductModel
 import kotlinx.android.synthetic.main.product_slideview_layout.view.*
 
 class SlideView(
-    context: Context, product: ProductModel? = null,
+    context: Context,
     private val percentageHeight: Int? = null,
     val blurView: BlurView? = null
 ) : CardView(context) {
@@ -34,11 +32,12 @@ class SlideView(
     var yLowerLimit = 0f
 
     private var isOpened = false
-    private var productCount = 1
     private var quantityText: TextView? = null
-
-    private val realPrice = product?.price
-    private val title = product?.name
+//
+//    private var productCount = 1
+//    private val realPrice = product?.price
+//    private val title = product?.name
+//    private var calculatedPrice = 0
 
     init {
         View.inflate(context, R.layout.product_slideview_layout, this)
@@ -86,7 +85,7 @@ class SlideView(
         initializeViewPosition()
         yUpperLimit = moveUpOffset
         yLowerLimit = parentHeight.toFloat() - (parentHeight * 20 / 100).toFloat()
-        quantityText = (context as Activity).findViewById(R.id.product_quantity)
+
         if (sizeLoaded.value == false) {
             sizeLoaded.value = true
             handle.setOnClickListener {
@@ -123,6 +122,20 @@ class SlideView(
         }
     }
 
+    fun showSlideView(isVisible: Boolean) {
+        if (isVisible) {
+            ObjectAnimator.ofFloat(mainRootView, "translationY", moveDownOffset).apply {
+                duration = 400
+                start()
+            }
+        } else {
+            ObjectAnimator.ofFloat(mainRootView, "translationY", parentHeight.toFloat()).apply {
+                duration = 400
+                start()
+            }
+        }
+    }
+
     fun slideUp(currentPosition: Float) {
         if (sizeLoaded.value == true) {
             slideUpOnSizeLoaded(currentPosition)
@@ -136,7 +149,7 @@ class SlideView(
     }
 
     private fun slideUpOnSizeLoaded(currentPosition: Float) {
-        handleSlideViewClickListeners()
+//        handleSlideViewClickListeners()
         isOpened = true
         rotateHandle(true)
         this.y = currentPosition
@@ -162,32 +175,6 @@ class SlideView(
             }
 
         })
-    }
-
-    private fun handleSlideViewClickListeners() {
-        product_slideview_title.text = title
-        var calculatedPrice = "Rs. ${(productCount * realPrice!!)}"
-        product_total_price.text = calculatedPrice
-        product_quantity.text = productCount.toString()
-
-        product_addProduct.setOnClickListener {
-            productCount += 1
-            quantityText?.text = productCount.toString()
-            calculatedPrice = "Rs. ${(productCount * realPrice)}"
-            product_total_price.text = calculatedPrice
-        }
-        product_removeProduct.setOnClickListener {
-            if (productCount > 1) {
-                productCount -= 1
-                quantityText?.text = productCount.toString()
-                calculatedPrice = "Rs. ${(productCount * realPrice)}"
-                product_total_price.text = calculatedPrice
-            }
-        }
-        product_add_cart_button.setOnClickListener {
-
-        }
-
     }
 
     fun slideDown() {

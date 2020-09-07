@@ -1,8 +1,11 @@
 package com.example.singlevendorapp.adapters
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +15,7 @@ import com.example.singlevendorapp.MyApplication
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.activities.ProductActivity
 import com.example.singlevendorapp.models.ProductModel
+import com.example.singlevendorapp.shortToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -48,6 +52,7 @@ class PizzaFragmentAdapter(val context: Context, private val list: ArrayList<Pro
         var Image: ImageView? = null
         var price: TextView? = null
         var addFav: ImageView? = null
+        var favorited: ImageView? = null
 
         var product: ProductModel? = null
 
@@ -56,19 +61,47 @@ class PizzaFragmentAdapter(val context: Context, private val list: ArrayList<Pro
             Image = itemView.findViewById(R.id.image)
             price = itemView.findViewById(R.id.price)
             addFav = itemView.findViewById(R.id.addFavorite)
+            favorited = itemView.findViewById(R.id.favorited)
+
             addFav?.setOnClickListener {
-                if (it.contentDescription.equals("addedFalse")) {
-                    runBlocking {
-                        storeProductToDataBase(product!!)
+                runBlocking {
+                    storeProductToDataBase(product!!)
+                }
+
+                favorited!!.visibility = View.VISIBLE
+                val animator = ObjectAnimator.ofInt(favorited!!.drawable, "level", 10000)
+                animator.duration = 400
+                animator.start()
+                context.shortToast("Added to Favorites")
+            }
+
+            favorited?.setOnClickListener {
+                val animator = ObjectAnimator.ofInt(favorited!!.drawable, "level", 0)
+                animator.duration = 400
+                animator.start()
+                animator.addListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator?) {
+
                     }
-                    addFav?.setImageResource(R.drawable.favorited)
-                    it.contentDescription = "addedTrue"
-                } else if (it.contentDescription.equals("addedTrue")) {
-                    addFav?.setImageResource(R.drawable.favorited_border)
-                    runBlocking {
-                        removeProductFromDatabase(product!!)
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        //favorited!!.setImageDrawable(context.resources.getDrawable(R.drawable.favorite_clip_drawable))
+                        //favorited!!.drawable.level = 0
+                        favorited!!.visibility = View.GONE
                     }
-                    it.contentDescription = "addedFalse"
+
+                    override fun onAnimationCancel(animation: Animator?) {
+
+                    }
+
+                    override fun onAnimationRepeat(animation: Animator?) {
+
+                    }
+
+                })
+                context.shortToast("Removed from Favorites")
+                runBlocking {
+                    removeProductFromDatabase(product!!)
                 }
             }
         }
@@ -79,15 +112,16 @@ class PizzaFragmentAdapter(val context: Context, private val list: ArrayList<Pro
             Glide.with(context).load(product.image).into(Image!!)
             val prices = "Rs. ${product.price}"
             price?.text = prices
+            favorited!!.drawable.level = 0
+            favorited!!.visibility = View.GONE
 
             runBlocking {
                 if (checkIfAvailable(product.image)) {
-                    Glide.with(context).load(R.drawable.favorited).centerCrop().into(addFav!!)
-                    addFav?.contentDescription = "addedTrue"
+                    favorited!!.drawable.level = 10000
+                    favorited!!.visibility = View.VISIBLE
                 } else {
-                    Glide.with(context).load(R.drawable.favorited_border).centerCrop()
-                        .into(addFav!!)
-                    addFav?.contentDescription = "addedFalse"
+                    favorited!!.drawable.level = 0
+                    favorited!!.visibility = View.GONE
                 }
 
             }

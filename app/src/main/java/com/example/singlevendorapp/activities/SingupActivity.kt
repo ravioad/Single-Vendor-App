@@ -1,12 +1,10 @@
 package com.example.singlevendorapp.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import com.example.singlevendorapp.MainActivity
 import com.example.singlevendorapp.MyBaseClass
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.models.User

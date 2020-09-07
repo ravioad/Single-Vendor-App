@@ -19,7 +19,6 @@ import com.example.singlevendorapp.fragments.DrinksFragment
 import com.example.singlevendorapp.fragments.PizzaFragment
 import com.example.singlevendorapp.fragments.RollsFragment
 import com.example.singlevendorapp.models.ProductModel
-import com.example.singlevendorapp.mycustomviews.Type1ListenerCallback
 import com.example.singlevendorapp.toast
 import com.example.singlevendorapp.viewmodels.ProductViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -115,10 +114,8 @@ class HomeActivity : MyBaseClass() {
                     //showError
                     hideLoadingView()
                     showAlertBox("Error Occurred!")
-                    myAlertBox!!.setOnClickListener(object : Type1ListenerCallback {
-                        override fun buttonClickListener() {
-                            hideDialog()
-                        }
+                    addAlertBoxListener(buttonListener = {
+                        hideDialog()
                     })
                     this.toast(it.message.toString())
                     Log.e("data null check error", (it.data == null).toString())
@@ -137,6 +134,9 @@ class HomeActivity : MyBaseClass() {
         when (item.itemId) {
             R.id.favorites -> {
                 startActivity(Intent(this, FavoritesActivity::class.java))
+            }
+            R.id.cart -> {
+                startActivity(Intent(this, CartActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

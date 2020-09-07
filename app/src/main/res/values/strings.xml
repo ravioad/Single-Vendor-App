@@ -12,4 +12,8 @@
     <string name="fav_image">Favorite Image</string>
     <string name="placeholder_fav_title">Pepperoni Pizza</string>
     <string name="remove_fav">Remove</string>
+    <string name="empty_cart">Cart is Empty!</string>
+    <string name="slideViewHandleDesc">Slide View Handle</string>
+    <string name="no_of_items_slideview">3 Items in Your Cart</string>
+    <string name="price_placeholder">Rs. 3340</string>
 </resources>

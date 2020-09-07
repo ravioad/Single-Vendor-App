@@ -30,6 +30,16 @@
             android:contentDescription="addedFalse"
             android:src="@drawable/favorited_border" />
 
+        <ImageView
+            android:id="@+id/favorited"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_8sdp"
+            android:contentDescription="addedFalse"
+            android:src="@drawable/favorite_clip_drawable" />
+
         <TextView
             android:id="@+id/title"
             style="@style/product_title_style"
@@ -38,9 +48,9 @@
             android:layout_below="@id/image"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_22ssp"
-            android:fontFamily="@font/balsamiq_sans_bold"
             android:autoSizeTextType="uniform"
-            android:text="Papperoni Pizza" />
+            android:fontFamily="@font/balsamiq_sans_bold"
+            android:text="Pepperoni Pizza" />
 
         <TextView
             android:id="@+id/price"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favorites_rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_screen_color"
@@ -28,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:gravity="center"
                 android:text="Favorites" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -38,11 +40,23 @@
         android:id="@+id/no_favorites_added"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_centerInParent="true"
         android:text="No Favorites Added"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="@dimen/_14ssp"
-        android:layout_centerInParent="true"/>
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/favorite_goto_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/no_favorites_added"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:backgroundTint="#FFDA00"
+        android:text="Go To Menu"
+        android:textColor="#F96167"
+        android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorite_recyclerview"
@@ -52,5 +66,6 @@
         android:paddingStart="@dimen/_12sdp"
         android:paddingTop="@dimen/_12sdp"
         android:paddingEnd="@dimen/_12sdp"
+        android:visibility="gone"
         tools:listitem="@layout/favorites_list_item" />
 </RelativeLayout>

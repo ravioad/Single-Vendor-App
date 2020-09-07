@@ -8,9 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.singlevendorapp.mycustomviews.BlurView
-import com.example.singlevendorapp.mycustomviews.MyAlertBox
-import com.example.singlevendorapp.mycustomviews.MyLoadingView
+import com.example.singlevendorapp.mycustomviews.*
 import com.google.firebase.auth.FirebaseAuth
 
 open class MyBaseClass : AppCompatActivity() {
@@ -19,7 +17,7 @@ open class MyBaseClass : AppCompatActivity() {
     lateinit var myBlurView: BlurView
     private var myLoadingView: MyLoadingView? = null
     private var progressBar: ProgressBar? = null
-    var myAlertBox: MyAlertBox? = null
+    private var myAlertBox: MyAlertBox? = null
     fun addCommonViews(rootRl: RelativeLayout?, context: Activity) {
         this.rootLayout = rootRl
         this.context = context
@@ -59,9 +57,31 @@ open class MyBaseClass : AppCompatActivity() {
         myLoadingView?.hideLoading()
     }
 
-    fun addAlertBox(isSingleButton: Boolean = true) {
-        myAlertBox = MyAlertBox(context, myBlurView, isSingleButton)
+    fun addAlertBox(isSingleButton: Boolean = true, firstButtonText: String = "Ok", secondButtonText: String = "Cancel") {
+        myAlertBox = MyAlertBox(context, myBlurView, isSingleButton, firstButtonText, secondButtonText)
         rootLayout!!.addView(myAlertBox)
+    }
+
+    fun addAlertBoxListeners(firstButton: () -> Unit, secondButton: () -> Unit) {
+        myAlertBox?.setOnClickListener(object : Type2ListenerCallback {
+            override fun button1ClickListener() {
+                firstButton.invoke()
+            }
+
+            override fun button2ClickListener() {
+                secondButton.invoke()
+            }
+
+        })
+    }
+
+    fun addAlertBoxListener(buttonListener: () -> Unit) {
+        myAlertBox?.setOnClickListener(object: Type1ListenerCallback{
+            override fun buttonClickListener() {
+                buttonListener.invoke()
+            }
+
+        })
     }
 
     fun showAlertBox(message: String = "") {

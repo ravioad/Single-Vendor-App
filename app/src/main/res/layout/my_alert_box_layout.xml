@@ -28,14 +28,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/alert_box_imageview"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/_11sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_11sdp"
             android:text="Test Message"
             android:textAlignment="center"
-            android:textColor="#171F24"
-            android:textSize="@dimen/_13ssp" />
+            android:textColor="#333A3E"
+            android:textSize="@dimen/_17ssp" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

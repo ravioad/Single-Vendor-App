@@ -27,6 +27,7 @@
             style="@style/product_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
@@ -56,24 +57,18 @@
             android:textColor="#3FA83F"
             android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:elevation="@dimen/_16sdp"
-            android:padding="@dimen/_8sdp"
-            app:cardCornerRadius="@dimen/_4sdp">
-
-            <ImageView
+            <ImageButton
                 android:id="@+id/favorite_remove"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/remove_fav"
-                android:src="@drawable/unfavorite"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:elevation="@dimen/_16sdp"
+                android:src="@drawable/cart_delete_icon"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:tooltipText="@string/remove_fav"
                 app:tint="#989898" />
-        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
