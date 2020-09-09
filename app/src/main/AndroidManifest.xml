@@ -10,12 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.CartActivity"
+        <activity android:name=".activities.MainActivity" android:theme="@style/MaterialActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CartActivity"
             android:label=""
             android:theme="@style/MaterialActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name=".activities.ProductActivity"
@@ -23,7 +31,7 @@
             android:theme="@style/MaterialActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name=".activities.FavoritesActivity"
@@ -31,16 +39,7 @@
             android:theme="@style/MaterialActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activities.HomeActivity"
-            android:theme="@style/MaterialActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
             android:name=".activities.SingupActivity"

@@ -70,7 +70,7 @@ class ProductActivity : MyBaseClass() {
         addAlertBoxListeners(firstButton = {
             navigateThroughDialog(Intent(this, CartActivity::class.java))
         }, secondButton = {
-            navigateThroughDialog(Intent(this, HomeActivity::class.java))
+            navigateThroughDialog(Intent(this, MainActivity::class.java))
         })
 
 

@@ -1,34 +1,31 @@
-package com.example.singlevendorapp.activities
+package com.example.singlevendorapp.fragments
 
 import android.animation.ValueAnimator
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import androidx.activity.viewModels
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.singlevendorapp.FactoryClasses.ProductDependencyInjectorUtility
-import com.example.singlevendorapp.MyBaseClass
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.Status
 import com.example.singlevendorapp.adapters.HomeTopPagerAdapter
-import com.example.singlevendorapp.fragments.BurgerFragment
-import com.example.singlevendorapp.fragments.DrinksFragment
-import com.example.singlevendorapp.fragments.PizzaFragment
-import com.example.singlevendorapp.fragments.RollsFragment
 import com.example.singlevendorapp.models.ProductModel
-import com.example.singlevendorapp.toast
 import com.example.singlevendorapp.viewmodels.ProductViewModel
-import com.google.android.material.appbar.MaterialToolbar
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeActivity : MyBaseClass() {
+class HomeFragment : Fragment() {
 
     private val productViewModel: ProductViewModel by viewModels {
         ProductDependencyInjectorUtility.getProductViewModelFactory(
@@ -37,48 +34,53 @@ class HomeActivity : MyBaseClass() {
             ).child("deals")
         )
     }
-
+    private var shimmer: ShimmerFrameLayout? = null
+    private var chipGroup: ChipGroup? = null
+    private var selectedChip: Chip? = null
     private var currentPosition = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        val toolbar: MaterialToolbar? = findViewById(R.id.home_topAppBar)
-        setSupportActionBar(toolbar)
-        addCommonViews(home_rootLayout, this)
-        populateData()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val screenLayout: View = inflater.inflate(R.layout.activity_home, container, false)
+        shimmer = screenLayout.findViewById(R.id.home__viewpager_shimmerContainer)
+        chipGroup = screenLayout.findViewById(R.id.home_chipGroup)
+        selectedChip = screenLayout.findViewById(R.id.burgerChip)
         handleFragmentsChips()
-
+        populateData()
+        return screenLayout
     }
 
     private fun handleFragmentsChips() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.home_fragment_container, BurgerFragment.newInstance()).commitNow()
-        burgerChip.elevation = 20f
 
-        home_chipGroup.setOnCheckedChangeListener { _, checkedId ->
+        childFragmentManager.beginTransaction()
+            .add(R.id.home_fragment_container, BurgerFragment.newInstance()).commitNow()
+        selectedChip?.elevation = 20f
+
+        chipGroup?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.pizzaChip -> {
-                    supportFragmentManager.beginTransaction()
+                    childFragmentManager.beginTransaction()
                         .replace(R.id.home_fragment_container, PizzaFragment.newInstance())
                         .commitNow()
                     animateChip(0)
 
                 }
                 R.id.burgerChip -> {
-                    supportFragmentManager.beginTransaction()
+                    childFragmentManager.beginTransaction()
                         .replace(R.id.home_fragment_container, BurgerFragment.newInstance())
                         .commitNow()
                     animateChip(1)
                 }
                 R.id.rollsChip -> {
-                    supportFragmentManager.beginTransaction()
+                    childFragmentManager.beginTransaction()
                         .replace(R.id.home_fragment_container, RollsFragment.newInstance())
                         .commitNow()
                     animateChip(2)
                 }
                 R.id.drinksChip -> {
-                    supportFragmentManager.beginTransaction()
+                    childFragmentManager.beginTransaction()
                         .replace(R.id.home_fragment_container, DrinksFragment.newInstance())
                         .commitNow()
 
@@ -89,10 +91,11 @@ class HomeActivity : MyBaseClass() {
     }
 
     private fun populateData() {
-        productViewModel.getProducts().observe(this, Observer {
+        productViewModel.getProducts().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Status.Success -> {
-                    hideLoadingView()
+                    shimmer?.visibility = View.GONE
+                    shimmer?.stopShimmer()
                     Log.e("Status check", "Success!!")
                     val dataSnapshot = it.data
                     val list = ArrayList<ProductModel>()
@@ -100,7 +103,7 @@ class HomeActivity : MyBaseClass() {
                         val pro = product.getValue(ProductModel::class.java)!!
                         list.add(pro)
                     }
-                    val adapter = HomeTopPagerAdapter(this, list)
+                    val adapter = HomeTopPagerAdapter(context as Activity, list)
                     home_top_viewpager.adapter = adapter
                     home_tab_indicator.setupWithViewPager(home_top_viewpager)
 //                    autoScrollViewPager(list)
@@ -108,38 +111,22 @@ class HomeActivity : MyBaseClass() {
                 is Status.Loading -> {
                     //it should show errorDialog if internet is not connected
                     //because if internet is not connected it will keep showing the loadingView
-//                    showLoadingView()
+                    shimmer?.visibility = View.VISIBLE
+                    shimmer?.startShimmer()
                 }
                 is Status.Error -> {
                     //showError
-                    hideLoadingView()
-                    showAlertBox("Error Occurred!")
-                    addAlertBoxListener(buttonListener = {
-                        hideDialog()
-                    })
-                    this.toast(it.message.toString())
-                    Log.e("data null check error", (it.data == null).toString())
+                    shimmer?.visibility = View.GONE
+                    shimmer?.stopShimmer()
+//                    showAlertBox("Error Occurred!")
+//                    addAlertBoxListener(buttonListener = {
+//                        hideDialog()
+//                    })
+//                    this.toast(it.message.toString())
                 }
             }
         })
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.favorites -> {
-                startActivity(Intent(this, FavoritesActivity::class.java))
-            }
-            R.id.cart -> {
-                startActivity(Intent(this, CartActivity::class.java))
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun animateChip(index: Int) {
@@ -173,7 +160,7 @@ class HomeActivity : MyBaseClass() {
     private fun autoScrollViewPager(list: ArrayList<ProductModel>) {
         val handler = Handler()
         val runnable = Runnable() {
-            runOnUiThread {
+            (context as Activity).runOnUiThread {
                 if (currentPosition == list.size) {
                     currentPosition = 0
                 }
@@ -185,5 +172,15 @@ class HomeActivity : MyBaseClass() {
                 handler.post(runnable)
             }
         }, 500, 5000)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        shimmer?.startShimmer()
+    }
+
+    override fun onPause() {
+        shimmer?.stopShimmer()
+        super.onPause()
     }
 }

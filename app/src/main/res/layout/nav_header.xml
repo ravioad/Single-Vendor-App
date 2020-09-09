@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_140sdp"
+    android:gravity="center_horizontal"
+    android:background="@drawable/header_background">
+
+    <ImageView
+        android:id="@+id/main_drawer_image"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_25sdp" />
+    <TextView
+        android:id="@+id/main_drawer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/main_drawer_image"
+        android:layout_marginBottom="-5dp"
+        android:fontFamily="@font/balsamiq_sans_bold"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_18ssp"
+        android:text="Ravi Kumar"/>
+
+    <TextView
+        android:id="@+id/main_drawer_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/main_drawer_title"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textColor="#E3E3E3"
+        android:textSize="@dimen/_13ssp"
+        android:text="rvoad@gmail.com"/>
+
+</RelativeLayout>

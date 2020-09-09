@@ -72,6 +72,10 @@ class CartActivity : MyBaseClass() {
             }
         })
 
+        //TODO: implement checkOut Button
+        //TODO: create Orders references in firebase and OrderModel
+
+
     }
 
 

@@ -1,25 +1,28 @@
 package com.example.singlevendorapp.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.singlevendorapp.FactoryClasses.ProductDependencyInjectorUtility
+import com.example.singlevendorapp.MyBaseFragment
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.Status
 import com.example.singlevendorapp.adapters.PizzaFragmentAdapter
 import com.example.singlevendorapp.models.ProductModel
 import com.example.singlevendorapp.viewmodels.ProductViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.database.FirebaseDatabase
 
-class DrinksFragment : Fragment() {
+class DrinksFragment : MyBaseFragment() {
     companion object {
         fun newInstance() = DrinksFragment()
     }
@@ -31,12 +34,7 @@ class DrinksFragment : Fragment() {
             ).child("drinks")
         )
     }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private var shimmer: ShimmerFrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +43,14 @@ class DrinksFragment : Fragment() {
         // Inflate the layout for this fragment
         val screenLayout: View = inflater.inflate(R.layout.fragment_drinks, container, false)
         val recyclerView: RecyclerView = screenLayout.findViewById(R.id.drinks_recyclerview)
+        val rootLayout = screenLayout.findViewById<RelativeLayout>(R.id.drinks_fragment_rootLayout)
+        addCommonViews(rootLayout, context as Activity)
+        shimmer = screenLayout.findViewById(R.id.drinks_shimmer_container)
         productViewModel.getProducts().observe(context as AppCompatActivity, Observer {
             when (it) {
                 is Status.Success -> {
-//                    hideLoadingView()
+                    shimmer?.visibility = View.GONE
+                    shimmer?.stopShimmer()
                     Log.e("Status check", "Success!!")
                     val dataSnapshot = it.data
                     val list = ArrayList<ProductModel>()
@@ -64,24 +66,27 @@ class DrinksFragment : Fragment() {
                 is Status.Loading -> {
                     //it should show errorDialog if internet is not connected
                     //because if internet is not connected it will keep showing the loadingView
-//                    showLoadingView()
+                    shimmer?.visibility = View.VISIBLE
+                    shimmer?.startShimmer()
                 }
                 is Status.Error -> {
                     //showError
-//                    hideLoadingView()
-//                    showAlertBox("Error Occurred!")
-//                    myAlertBox!!.setOnClickListener(object : Type1ListenerCallback {
-//                        override fun buttonClickListener() {
-//                            hideDialog()
-//                        }
-//                }
-//                    )
-//                    this.toast(it.message.toString())
-//                Log.e("data null check error", (it.data == null).toString())
+                    shimmer?.visibility = View.GONE
+                    shimmer?.stopShimmer()
                 }
             }
         })
         return screenLayout
+    }
+
+    override fun onResume() {
+        super.onResume()
+        shimmer?.startShimmer()
+    }
+
+    override fun onPause() {
+        shimmer?.stopShimmer()
+        super.onPause()
     }
 
 }

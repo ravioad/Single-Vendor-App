@@ -62,7 +62,7 @@ class SingupActivity : MyBaseClass(), View.OnClickListener {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         currentUser.let {
-            val intent = Intent(this, HomeActivity::class.java).apply {
+            val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("TheUser", currentUser)
             }
             startActivity(intent)
