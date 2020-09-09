@@ -88,15 +88,15 @@ class IntroActivity : AppCompatActivity() {
 //        intro_getstarted_button.animation.cancel()
     }
 
-    fun saveSeenState() {
+    private fun saveSeenState() {
         val preferences: SharedPreferences =
-            applicationContext.getSharedPreferences(",myPreferences", Context.MODE_PRIVATE)
+            applicationContext.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putBoolean("seen", true)
         editor.apply()
     }
 
-    fun checkSeenState(): Boolean {
+    private fun checkSeenState(): Boolean {
         val preferences: SharedPreferences =
             applicationContext.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         return preferences.getBoolean("seen", false)

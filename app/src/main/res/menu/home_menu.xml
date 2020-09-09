@@ -15,6 +15,6 @@
         android:id="@+id/userProfile"
         android:title="Profile" />
     <item
-        android:id="@+id/settings"
-        android:title="Settings" />
+        android:id="@+id/logout"
+        android:title="Log Out" />
 </menu>

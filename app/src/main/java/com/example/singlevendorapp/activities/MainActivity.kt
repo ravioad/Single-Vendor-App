@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.singlevendorapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -84,6 +85,11 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.cart -> {
                 startActivity(Intent(this, CartActivity::class.java))
+            }
+            R.id.logout -> {
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                finish()
             }
 
             //TODO: try removing extra optionMenu items

@@ -24,6 +24,9 @@ class SingupActivity : MyBaseClass(), View.OnClickListener {
         setContentView(R.layout.activity_singup)
         addCommonViews(signUp_rootLayout, this)
         signup_button.setOnClickListener(this)
+        login_text.setOnClickListener{
+            startActivity(Intent(this@SingupActivity, LoginActivity::class.java))
+        }
         database = Firebase.database.reference
         auth = FirebaseAuth.getInstance()
     }
@@ -43,7 +46,8 @@ class SingupActivity : MyBaseClass(), View.OnClickListener {
                 updateUI(task.result?.user)
             } else {
                 Log.e("AddUser:Failure", task.exception.toString())
-                this.toast("Registration failed")
+
+                this.toast(task.exception.toString())
             }
         }
     }

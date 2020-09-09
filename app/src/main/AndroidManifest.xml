@@ -11,11 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" android:theme="@style/MaterialActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.CartActivity"
@@ -46,7 +42,13 @@
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".activities.IntroActivity"
-            android:theme="@style/NoActionBarTheme" />
+            android:theme="@style/NoActionBarTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/NoActionBarTheme" />

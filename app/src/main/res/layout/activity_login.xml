@@ -58,6 +58,7 @@
                         android:ems="10"
                         android:textSize="@dimen/_12ssp"
                         android:hint="Email"
+                        android:text="rv999@gmail.com"
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +76,7 @@
                         android:ems="10"
                         android:textSize="@dimen/_12ssp"
                         android:hint="Password"
+                        android:text="123456789"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
