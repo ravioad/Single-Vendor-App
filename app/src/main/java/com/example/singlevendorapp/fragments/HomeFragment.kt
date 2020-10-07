@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.example.singlevendorapp.FactoryClasses.ProductDependencyInjectorUtility
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.Status
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
         )
     }
     private var shimmer: ShimmerFrameLayout? = null
+    private var viewpager: ViewPager? = null
     private var chipGroup: ChipGroup? = null
     private var selectedChip: Chip? = null
     private var currentPosition = 0
@@ -47,6 +49,7 @@ class HomeFragment : Fragment() {
         shimmer = screenLayout.findViewById(R.id.home__viewpager_shimmerContainer)
         chipGroup = screenLayout.findViewById(R.id.home_chipGroup)
         selectedChip = screenLayout.findViewById(R.id.burgerChip)
+        viewpager = screenLayout.findViewById(R.id.home_top_viewpager)
         handleFragmentsChips()
         populateData()
         return screenLayout
@@ -106,7 +109,7 @@ class HomeFragment : Fragment() {
                     val adapter = HomeTopPagerAdapter(context as Activity, list)
                     home_top_viewpager.adapter = adapter
                     home_tab_indicator.setupWithViewPager(home_top_viewpager)
-//                    autoScrollViewPager(list)
+                    autoScrollViewPager(list)
                 }
                 is Status.Loading -> {
                     //it should show errorDialog if internet is not connected
@@ -136,7 +139,6 @@ class HomeFragment : Fragment() {
         animateChipElevation(burgerChip, list[1])
         animateChipElevation(rollsChip, list[2])
         animateChipElevation(drinksChip, list[3])
-
     }
 
     private fun animateChipElevation(chip: Chip, forward: Boolean) {
@@ -160,11 +162,11 @@ class HomeFragment : Fragment() {
     private fun autoScrollViewPager(list: ArrayList<ProductModel>) {
         val handler = Handler()
         val runnable = Runnable() {
-            (context as Activity).runOnUiThread {
+            (context as? Activity)?.runOnUiThread {
                 if (currentPosition == list.size) {
                     currentPosition = 0
                 }
-                home_top_viewpager.currentItem = currentPosition++
+                viewpager?.currentItem = currentPosition++
             }
         }
         Timer().schedule(object : TimerTask() {

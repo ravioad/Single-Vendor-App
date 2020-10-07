@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/order_child_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="child 1"
+        android:fontFamily="@font/balsamiq_sans_regular"
+        android:textSize="@dimen/_12ssp"/>
+
+    <TextView
+        android:id="@+id/order_child_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="@font/balsamiq_sans_regular"
+        android:textSize="@dimen/_10ssp"/>
+</RelativeLayout>

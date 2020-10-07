@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" android:theme="@style/MaterialActivity">
-
-        </activity>
+        <activity
+            android:name=".activities.OrderActivity"
+            android:label=""
+            android:theme="@style/MaterialActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/MaterialActivity" />
         <activity
             android:name=".activities.CartActivity"
             android:label=""
@@ -42,7 +46,7 @@
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".activities.IntroActivity"
-            android:theme="@style/NoActionBarTheme" >
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

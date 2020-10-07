@@ -17,5 +17,4 @@ data class ProductModel(
 //    fun getImageUri() = image
 //    fun getQuantity() = quantity
 
-
 }

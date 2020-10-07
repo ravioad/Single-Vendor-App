@@ -89,12 +89,12 @@ open class MyBaseClass : AppCompatActivity() {
         myAlertBox!!.showDialog()
     }
 
-    fun hideDialog() {
+    fun hideAlertBox() {
         myAlertBox!!.hideDialog()
     }
 
     ///////////////////////////////////////
-    val uid: String
+    val uidFirebase: String
         get() = FirebaseAuth.getInstance().currentUser!!.uid
 
     fun hideKeyboard(view: View) {

@@ -97,7 +97,7 @@
         android:visibility="gone"
         android:textColor="#F96167" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.chauthai.overscroll.RecyclerViewBouncy
         android:id="@+id/cart_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_screen_color"
+    tools:context=".activities.OrderActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/order_appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAlignment="center">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/order_topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:textAlignment="center">
+
+            <TextView
+                style="@style/AppbarTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/balsamiq_sans_bold"
+                android:gravity="center"
+                android:text="Order" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_appbarLayout"
+        android:padding="@dimen/_10sdp">
+
+
+        <TableLayout
+            android:id="@+id/order_tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/tableLayoutKey"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/order_title"
+                    style="@style/tableLayoutValue"
+                    android:text="Ravi" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/tableLayoutKey"
+                    android:text="Phone" />
+
+                <TextView
+                    android:id="@+id/order_phone"
+                    style="@style/tableLayoutValue"
+                    android:text="090078601" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/tableLayoutKey"
+                    android:text="Time" />
+
+                <TextView
+                    android:id="@+id/order_date"
+                    style="@style/tableLayoutValue"
+                    android:text="12:22 10-22" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/tableLayoutKey"
+                    android:text="Address" />
+
+                <TextView
+                    android:id="@+id/order_address"
+                    style="@style/tableLayoutValue"
+                    android:text="half address" />
+            </TableRow>
+        </TableLayout>
+
+        <ExpandableListView
+            android:id="@+id/order_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_below="@id/order_tableLayout" />
+    </RelativeLayout>
+</RelativeLayout>

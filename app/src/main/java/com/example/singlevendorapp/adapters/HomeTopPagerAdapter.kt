@@ -34,5 +34,18 @@ class HomeTopPagerAdapter(val context: Context, val mList: ArrayList<ProductMode
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
+        unbindDrawable(`object`)
+    }
+
+    private fun unbindDrawable(view: View){
+        if(view.background != null){
+            view.background.callback = null
+        }
+        if(view is ViewGroup){
+            for (i in 0 until (view).childCount){
+                unbindDrawable(view.getChildAt(i))
+            }
+            view.removeAllViews()
+        }
     }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/_130sdp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:elevation="@dimen/_10sdp"
+    android:padding="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_10sdp">
+
+    <RelativeLayout
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/orderDialog_product_image"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/testpizza" />
+
+        <ImageView
+            android:id="@+id/orderDialog_product_favorite"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_8sdp"
+            android:contentDescription="addedFalse"
+            android:src="@drawable/favorited_border" />
+
+        <TextView
+            android:id="@+id/orderDialog_product_title"
+            style="@style/product_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDialog_product_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_22ssp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/balsamiq_sans_bold"
+            android:text="Pepperoni Pizza" />
+
+        <TextView
+            android:id="@+id/orderDialog_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDialog_product_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-25dp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:fontFamily="@font/balsamiq_sans_bold"
+            android:text="Rs. 340"
+            android:textColor="#639F27"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/orderDialog_product_ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDialog_product_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:isIndicator="true" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

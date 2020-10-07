@@ -139,8 +139,6 @@ class ProductActivity : MyBaseClass() {
         }
 
     private fun navigateThroughDialog(intent: Intent) {
-//        hideDialog()
-//        slideView?.showSlideView(true)
         isBackPressDisable = false
         startActivity(intent)
         finish()

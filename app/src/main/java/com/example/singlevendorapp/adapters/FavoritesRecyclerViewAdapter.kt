@@ -49,7 +49,6 @@ class FavoritesRecyclerViewAdapter(
                 putExtra("product", list[position])
             }
             context.startActivity(intent)
-            context.shortToast(position.toString())
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.example.singlevendorapp.MyBaseClass
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.toast
@@ -21,6 +22,7 @@ class LoginActivity : MyBaseClass(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         addCommonViews(login_rootLayout, this)
+        Glide.with(this).load(R.drawable.login_img).into(login_image)
         login_button.setOnClickListener(this)
         signup_text.setOnClickListener(this)
         auth = FirebaseAuth.getInstance()
@@ -42,7 +44,7 @@ class LoginActivity : MyBaseClass(), View.OnClickListener {
 
     private fun loadLoginDetailsIfAvailable() {
         val preferences: SharedPreferences =
-            applicationContext.getSharedPreferences(",myPreferences", Context.MODE_PRIVATE)
+            applicationContext.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         if (!(preferences.getString("email", "").equals(""))) {
             remember_me.isChecked = true
             login_email_input.setText(preferences.getString("email", ""))
@@ -55,7 +57,7 @@ class LoginActivity : MyBaseClass(), View.OnClickListener {
 
     private fun saveLoginDetails() {
         val preferences: SharedPreferences =
-            applicationContext.getSharedPreferences(",myPreferences", Context.MODE_PRIVATE)
+            applicationContext.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("email", login_email_input.text.toString())
         editor.putString("password", login_password_input.text.toString())
@@ -64,7 +66,7 @@ class LoginActivity : MyBaseClass(), View.OnClickListener {
 
     private fun removeLoginDetails() {
         val preferences: SharedPreferences =
-            applicationContext.getSharedPreferences(",myPreferences", Context.MODE_PRIVATE)
+            applicationContext.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.remove("email")
         editor.remove("password")

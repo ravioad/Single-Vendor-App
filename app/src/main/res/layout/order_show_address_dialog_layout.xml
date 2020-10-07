@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/_8sdp">
+
+    <TextView
+        android:id="@+id/checkout_dialog_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:fontFamily="@font/balsamiq_sans_bold"
+        android:text="Address"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/order_dialog_address"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkout_dialog_heading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:fontFamily="@font/balsamiq_sans_regular"
+        android:textAlignment="center"
+        android:text="Address goes here"
+        android:textSize="@dimen/_16ssp" />
+
+</RelativeLayout>

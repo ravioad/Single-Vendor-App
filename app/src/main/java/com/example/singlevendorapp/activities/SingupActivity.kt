@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.example.singlevendorapp.MyBaseClass
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.models.User
@@ -23,9 +24,11 @@ class SingupActivity : MyBaseClass(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_singup)
         addCommonViews(signUp_rootLayout, this)
+        Glide.with(this).load(R.drawable.signup_img).into(signUp_image)
         signup_button.setOnClickListener(this)
-        login_text.setOnClickListener{
+        login_text.setOnClickListener {
             startActivity(Intent(this@SingupActivity, LoginActivity::class.java))
+            finish()
         }
         database = Firebase.database.reference
         auth = FirebaseAuth.getInstance()
@@ -53,7 +56,7 @@ class SingupActivity : MyBaseClass(), View.OnClickListener {
     }
 
     private fun addUser(name: String, email: String, uid: String) {
-        val user = User(name, email, uid)
+        val user = User(name = name, email = email, id = uid)
         database.child("users").child(uid).setValue(user).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 this.toast("Registration Successful")

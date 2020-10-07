@@ -16,4 +16,7 @@
     <string name="slideViewHandleDesc">Slide View Handle</string>
     <string name="no_of_items_slideview">3 Items in Your Cart</string>
     <string name="price_placeholder">Rs. 3340</string>
+    <string name="name_placeholder">Name</string>
+    <string name="phone_placeholder">Phone No.</string>
+    <string name="address_placeholder">Address</string>
 </resources>

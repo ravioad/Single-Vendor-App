@@ -165,7 +165,7 @@ class MyAlertBox(
         button.text = text
         button.setTextColor(Color.parseColor("#FFFFFF"))
         params.topMargin = 90
-        params.width = (35* parentWidth!!/100)
+        params.width = (35 * parentWidth!! / 100)
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         params.addRule(align)
         return params

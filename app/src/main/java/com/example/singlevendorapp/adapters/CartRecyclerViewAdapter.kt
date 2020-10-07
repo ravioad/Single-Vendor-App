@@ -2,6 +2,7 @@ package com.example.singlevendorapp.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.singlevendorapp.MyApplication
 import com.example.singlevendorapp.R
 import com.example.singlevendorapp.models.CartItemModel
-import com.example.singlevendorapp.shortToast
+import com.example.singlevendorapp.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -89,22 +90,29 @@ class CartRecyclerViewAdapter(
 
             remove?.setOnClickListener {
                 layoutPosition.also { position ->
+                    //TODO: last item removal causes app crash due to IndexOutOfBound Exception
                     runBlocking {
-                        removeProductFromDatabase(list[position])
+                        removeProductFromDatabase(list[position-1])
                         val updatedTotal = "Rs. ${getUpdatedTotal()}"
                         grandTotal.text = updatedTotal
-                        val updatedCount = "${getUpdatedItemCount()} Item in Cart"
+                        val updatedCount = "${getUpdatedItemCount()} Item(s) in Cart"
                         itemCount.text = updatedCount
                     }
-                    if(position==list.size-1 && list.size == 1){
-                        (context).findViewById<Button>(R.id.cart_order_button).visibility = View.GONE
+                    if (position == list.size && list.size == 1) {
+                        (context).findViewById<Button>(R.id.cart_order_button).visibility =
+                            View.GONE
                         (context).findViewById<TextView>(R.id.cart_empty).visibility = View.VISIBLE
-                        (context).findViewById<Button>(R.id.cart_goto_menu_button).visibility = View.VISIBLE
+                        (context).findViewById<Button>(R.id.cart_goto_menu_button).visibility =
+                            View.VISIBLE
                     }
-                    list.removeAt(position)
-                    notifyItemRemoved(position)
+                    list.removeAt(position-1)
+                    notifyItemRemoved(position-1)
+                    Handler().postDelayed({
+                        notifyDataSetChanged()
+                    }, 500)
                 }
             }
+           
         }
 
         fun bind(product: CartItemModel) {
