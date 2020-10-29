@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/_14sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,6 +97,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/intro_getstarted_button_style"
                     android:text="Sign Up"
+                    android:textAllCaps="false"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@android:color/white" />
 

@@ -111,6 +111,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/intro_getstarted_button_style"
                     android:text="Log in"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_12ssp" />
 
