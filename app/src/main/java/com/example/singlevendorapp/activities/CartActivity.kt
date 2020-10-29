@@ -1,12 +1,15 @@
 package com.example.singlevendorapp.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +26,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.activity_singup.*
+import kotlinx.android.synthetic.main.cart_checkout_custom_dialog.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -62,6 +67,17 @@ class CartActivity : MyBaseClass() {
         cart_goto_menu_button.setOnClickListener {
             finish()
         }
+
+        cart_order_button.setOnClickListener {
+            orderDialog()
+        }
+        getAndUpdateData()
+        //TODO: create Orders references in firebase and OrderModel
+
+
+    }
+
+    private fun getAndUpdateData() {
         cartViewModel.getCartList().observe(this, Observer {
             when (it) {
                 is Status.Success -> {
@@ -99,56 +115,76 @@ class CartActivity : MyBaseClass() {
                 }
             }
         })
-
-        cart_order_button.setOnClickListener {
-            orderDialog()
-        }
-        //TODO: create Orders references in firebase and OrderModel
-
-
     }
 
     private fun orderDialog() {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm")
         val currentDateTime = dateFormat.format(Date())
         Log.e("dateTimeDebug: ", currentDateTime)
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val viewGroup: ViewGroup = findViewById(android.R.id.content)
-        val dialogView: View =
-            LayoutInflater.from(this)
-                .inflate(R.layout.cart_checkout_custom_dialog, viewGroup, false)
-        builder.setView(dialogView).setPositiveButton("CheckOut") { dialog, id ->
-            val UID = FirebaseAuth.getInstance().currentUser!!.uid
-            val name = dialogView.findViewById<EditText>(R.id.checkout_dialog_name)
-            val phone = dialogView.findViewById<EditText>(R.id.checkout_dialog_phone)
-            val address = dialogView.findViewById<EditText>(R.id.checkout_dialog_address)
-            // orderId contains uid of the user, this helps making multiple orders, and retrieving those orders easily.
-            val orderID = UID + saveAndGetOrderCounter().toString()
-            val order = OrderModel(
-                orderId = orderID,
-                name = name.text.toString(),
-                phone = phone.text.toString(),
-                address = address.text.toString(),
-                products = list,
-                timestamp = currentDateTime
-            )
-            //TODO: only ONE order is storing/overwriting using UID reference, multiple orders should be stored
-            database.child(orderID).setValue(order).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    this.toast("order successful")
-                } else {
-                    this.toast(task.exception?.message.toString())
+        val dialogView = Dialog(this)
+        dialogView.setContentView(R.layout.cart_checkout_custom_dialog)
+        val positiveButton = dialogView.findViewById<Button>(R.id.checkoutDialogPositiveButton)
+        val negativeButton = dialogView.findViewById<Button>(R.id.checkoutDialogNegativeButton)
+        positiveButton.setOnClickListener {
+            if (validateDialogForm(dialogView)) {
+
+                val UID = FirebaseAuth.getInstance().currentUser!!.uid
+                val name = dialogView.findViewById<EditText>(R.id.checkout_dialog_name)
+                val phone = dialogView.findViewById<EditText>(R.id.checkout_dialog_phone)
+                val address = dialogView.findViewById<EditText>(R.id.checkout_dialog_address)
+                // orderId contains uid of the user, this helps making multiple orders, and retrieving those orders easily.
+                val orderID = UID + saveAndGetOrderCounter().toString()
+                val order = OrderModel(
+                    orderId = orderID,
+                    name = name.text.toString(),
+                    phone = phone.text.toString(),
+                    address = address.text.toString(),
+                    products = list,
+                    timestamp = currentDateTime
+                )
+                //TODO: only ONE order is storing/overwriting using UID reference, multiple orders should be stored
+                database.child(orderID).setValue(order).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        this.toast("order successful")
+                        dialogView.dismiss()
+                    } else {
+                        this.toast(task.exception?.message.toString())
+                    }
+
                 }
-
             }
-            //  showAlertBox("Confirm order?")
-
-        }.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.cancel()
         }
+        dialogView.window?.decorView?.setBackgroundResource(android.R.color.transparent)
+        dialogView.show()
+        negativeButton.setOnClickListener {
+            dialogView.dismiss()
+        }
+    }
 
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
+    private fun validateDialogForm(dialog: Dialog): Boolean {
+        val checkout_dialog_name = dialog.findViewById<EditText>(R.id.checkout_dialog_name)
+        val checkout_dialog_phone = dialog.findViewById<EditText>(R.id.checkout_dialog_phone)
+        val checkout_dialog_address = dialog.findViewById<EditText>(R.id.checkout_dialog_address)
+        var result = true
+        if (TextUtils.isEmpty(checkout_dialog_name.text.toString())) {
+            checkout_dialog_name.error = "Please enter name"
+            result = false
+        } else {
+            checkout_dialog_name.error = null
+        }
+        if (TextUtils.isEmpty(checkout_dialog_phone.text.toString())) {
+            checkout_dialog_phone.error = "Please enter phone"
+            result = false
+        } else {
+            checkout_dialog_phone.error = null
+        }
+        if (TextUtils.isEmpty(checkout_dialog_address.text.toString())) {
+            checkout_dialog_address.error = "Please enter address"
+            result = false
+        } else {
+            checkout_dialog_address.error = null
+        }
+        return result
     }
 
     private fun saveAndGetOrderCounter(): Int {

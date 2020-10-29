@@ -108,6 +108,7 @@ class OrderActivity : AppCompatActivity() {
         } // Assigning Favorite Icon
         title.text = product.name
         price.text = "Rs. ${product.unitPrice}"
+        dialogView.window?.decorView?.setBackgroundResource(android.R.color.transparent)
         dialogView.show()
     }
 

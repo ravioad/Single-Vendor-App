@@ -1,41 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/_8sdp">
+    android:layout_gravity="center_horizontal"
+    android:elevation="@dimen/_10sdp"
+    android:padding="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_10sdp">
 
-    <TextView
-        android:id="@+id/checkout_dialog_heading"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:fontFamily="@font/balsamiq_sans_bold"
-        android:text="Enter details to proceed"
-        android:textSize="@dimen/_16ssp" />
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_8sdp">
+
+        <TextView
+            android:id="@+id/checkout_dialog_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:fontFamily="@font/balsamiq_sans_bold"
+            android:text="Enter details to\n proceed"
+            android:textAlignment="center"
+            android:textSize="@dimen/_16ssp" />
 
 
-    <EditText
-        android:id="@+id/checkout_dialog_name"
-        style="@style/checkout_dialog_editText_style"
-        android:layout_below="@id/checkout_dialog_heading"
-        android:hint="@string/name_placeholder"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/checkout_dialog_name"
+            style="@style/checkout_dialog_editText_style"
+            android:layout_below="@id/checkout_dialog_heading"
+            android:hint="@string/name_placeholder"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/checkout_dialog_phone"
-        style="@style/checkout_dialog_editText_style"
-        android:layout_below="@id/checkout_dialog_name"
-        android:hint="@string/phone_placeholder"
-        android:inputType="phone" />
+        <EditText
+            android:id="@+id/checkout_dialog_phone"
+            style="@style/checkout_dialog_editText_style"
+            android:layout_below="@id/checkout_dialog_name"
+            android:hint="@string/phone_placeholder"
+            android:inputType="phone" />
 
-    <EditText
-        android:id="@+id/checkout_dialog_address"
-        style="@style/checkout_dialog_editText_style"
-        android:layout_below="@id/checkout_dialog_phone"
-        android:hint="@string/address_placeholder"
-        android:inputType="text" />
+        <EditText
+            android:id="@+id/checkout_dialog_address"
+            style="@style/checkout_dialog_editText_style"
+            android:layout_below="@id/checkout_dialog_phone"
+            android:hint="@string/address_placeholder"
+            android:inputType="text" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkout_dialog_address"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/checkoutDialogNegativeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button2"
+                android:minHeight="@dimen/_30sdp"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+            <android.widget.Button
+                android:id="@+id/checkoutDialogPositiveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:minHeight="@dimen/_30sdp"
+                android:text="Checkout"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
